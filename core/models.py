@@ -1,0 +1,45 @@
+import email
+from re import T
+from tabnanny import verbose
+from django.db import models
+
+class Categoria(models.Model):
+    descricao = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.descricao
+
+class Marca(models.Model):
+    nome = models.CharField(max_length=50)
+   
+    def __str__(self):
+        return self.nome
+
+class Cor(models.Model):
+    nome = models.CharField(max_length=50, null=False, blank=True) 
+    
+    def __str__(self):
+        return self.nome
+
+class Meta: 
+    verbose_name_plural = "Empresas"
+
+class Carro(models.Model):
+    modelo = models.CharField(max_length=50)
+    marca = models.ForeignKey(Marca, on_delete=models. PROTECT, related_name="carros")
+    quantidade = models.IntegerField()
+    categoria = models.ForeignKey(
+        Categoria, on_delete=models.PROTECT, related_name="carros"
+     )
+    ano = models.IntegerField(null=True, blank=True)
+    preco = models.FloatField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.modelo} {self.quantidade} ({self.ano})' 
+
+
+
+
+
+
+# Create your models here.
